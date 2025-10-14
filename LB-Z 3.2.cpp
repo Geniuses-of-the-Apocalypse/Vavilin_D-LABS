@@ -293,6 +293,7 @@ public:
 };
 
 int main() {
+    setlocale(LC_ALL, "RUS");
     cout << "=== Testing Hex Class ===" << endl;
     
     //Тестирование Hex
