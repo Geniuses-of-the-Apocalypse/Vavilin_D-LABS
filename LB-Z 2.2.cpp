@@ -34,12 +34,10 @@ public:
         return std::sin(toRadians());
     }
 
-    // Метод для получения косинуса
     double cos() const {
         return std::cos(toRadians());
     }
 
-    // Метод для получения тангенса
     double tan() const {
         return std::tan(toRadians());
     }
