@@ -1,9 +1,9 @@
 #include <iostream>
-#include <string>
 #include <cmath>
 
 using namespace std;
 
+//Класс
 class Angle
 {
 private:
@@ -23,6 +23,7 @@ public:
 	void display() const;
 	void input();
 
+	//Перегрузки
 	int getDegs() const { return degrees; }
 	int getMins() const { return minutes; }
 
@@ -49,6 +50,7 @@ public:
 	}
 };
 
+//Методы и конструкторы
 Angle::Angle(int deg, int min)
 {
 	degrees = deg;
@@ -117,6 +119,7 @@ void Angle::input()
 	normalize();
 }
 
+//Вывод результатов
 int  main()
 {
 	setlocale(LC_ALL, "RUS");
