@@ -45,8 +45,10 @@ public:
 };
 
 //Реализация конструктора и методов
-Angle::Angle(int deg = 0, int min = 0) : degrees(deg), minutes(min)
+Angle::Angle(int deg, int min)
 {
+	degrees = deg;
+	minutes = min;
 	normalize();
 }
 
