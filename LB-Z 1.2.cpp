@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//Класс
 class Angle
 {
 private:
@@ -19,6 +20,7 @@ public:
 	void decrease(int deg, int min = 0);
 	void output() const;
 
+	//Перегрущки
 	bool operator == (const Angle& other) const
 	{
 		return degrees == other.degrees && minutes == other.minutes;
@@ -42,6 +44,7 @@ public:
 	}
 };
 
+//Реализация конструктора и методов
 Angle::Angle(int deg = 0, int min = 0) : degrees(deg), minutes(min)
 {
 	normalize();
@@ -87,6 +90,7 @@ void Angle::output() const
 	cout << degrees << "° " << minutes << "'." << endl;
 }
 
+//Вывод значений
 int main()
 {
 	setlocale(LC_ALL, "RUS");
