@@ -52,12 +52,18 @@ Angle::Angle(int deg = 0, int min = 0) : degrees(deg), minutes(min)
 
 void Angle::normalize() //К диапозону 0-360
 {
-	int totalMins = degrees * 60 + minutes;
-	totalMins %= 21600;
-	if (totalMins < 0)
-		totalMins += 21600;
-	degrees = totalMins / 60;
-	minutes = totalMins % 60;
+		degrees += minutes / 60;
+	minutes = minutes % 60;
+
+	if (minutes < 0)
+	{
+		minutes += 60;
+		degrees -= 1;
+	}
+
+	degrees = degrees % 360;
+	if (degrees < 0)
+		degrees += 360;
 }
 
 double Angle::toRadians() const
