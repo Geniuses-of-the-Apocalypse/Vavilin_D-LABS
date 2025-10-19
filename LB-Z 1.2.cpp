@@ -105,8 +105,7 @@ int main()
 	Angle a2(400, 15);
 
 	int a;
-	int b;
-
+	
 	cout << ">>Угол a1." << endl;
 	cout << "Начальные значения: "; a1.output(); 
 	cout << "Перевод в радианы: " << a1.toRadians() << " рад." << endl;
@@ -120,17 +119,13 @@ int main()
 	cout << ">>Увеличение угла a1." << endl;
 	cout << "Введите увеличение для градусов: ";
 	cin >> a;
-	cout << "Введите увеличение для минут: ";
-	cin >> b;
-	a1.increase(a, b);
+	a1.increase(a, 0);
 	cout << "Угoл после увеличения: "; a1.output(); cout << endl;
 
 	cout << ">>Уменьшение угла a1." << endl;
 	cout << "Введите уменьшение для градусов: ";
 	cin >> a;
-	cout << "Введите уменьшение для минут: ";
-	cin >> b;
-	a1.decrease(a, b);
+	a1.decrease(a, 0);
 	cout << "Угол после уменьшения: "; a1.output(); cout << endl;
 
 	cout << ">>Сравнение углов." << endl;
