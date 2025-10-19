@@ -2,37 +2,33 @@
 
 using namespace std;
 
-struct Brand
+struct Product
 {
-    double first;
-    int second;
-    
-    double cost()
-    {
-        return first * second;
-    }
+	int first;
+	double second;
+
+	double power()
+	{
+		return (first / 100.0) * (second * 1000.0);
+	}
 };
 
-int main() {
-    setlocale(LC_ALL, "RUS");
-    cout << "ТОВАРЫ." << endl;
-    cout << "===================" << endl;
-    
-    Brand item;
-    
-    double a;
-    int b;
-    
-    cout << "Введите не целое число: ";
-    cin >> a;
-    
-    cout << "Введите целое число: ";
-    cin >> b;
-    
-    item.first = a;
-    item.second = b;
-    
-    cout << "==============================================" << endl;
-    cout << "Общая стоимость товара: " << item.cost() << " рублей." << endl;
-    return 0;
+int main()
+{
+	setlocale(LC_ALL, "RUS");
+
+	cout << "КОЛОРИЙНОСТЬ ПРОДУКТА." << endl;
+	cout << "========================" << endl;
+
+	Product pack;
+
+	cout << "Введите колорийность продукта (целое число): ";
+	cin >> pack.first;
+
+	cout << "Введите массу продукта (нецелое число): ";
+	cin >> pack.second;
+
+	cout << "=============================================" << endl;
+	cout << ">>Общая колорийность продукта: " << pack.power() << " ккал." << endl;
+	return 0;
 }
