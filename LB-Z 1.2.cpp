@@ -15,7 +15,7 @@ public:
 	Angle(int deg, int min);
 
 	double toRadians() const;
-	double sin() const;
+	double getSin() const;
 	void increase(int deg, int min = 0);
 	void decrease(int deg, int min = 0);
 	void output() const;
@@ -72,9 +72,9 @@ double Angle::toRadians() const
 	return totalDegs * 3.14 / 180.0;
 }
 
-double Angle::sin() const
+double Angle::getSin() const
 {
-	return std::sin(toRadians());
+	return sin(toRadians());
 }
 
 void Angle::increase(int deg, int min)
@@ -110,12 +110,12 @@ int main()
 	cout << ">>Угол a1." << endl;
 	cout << "Начальные значения: "; a1.output(); 
 	cout << "Перевод в радианы: " << a1.toRadians() << " рад." << endl;
-	cout << "Синус: " << a1.sin() << "." << endl << endl;
+	cout << "Синус: " << a1.getSin() << "." << endl << endl;
 
 	cout << ">>Угол a2." << endl;
 	cout << "Начальные значение: "; a2.output();
 	cout << "Перевод в радианы: " << a2.toRadians() << " рад." << endl;
-	cout << "Синус: " << a2.sin() << "." << endl << endl;
+	cout << "Синус: " << a2.getSin() << "." << endl << endl;
 
 	cout << ">>Увеличение угла a1." << endl;
 	cout << "Введите увеличение для градусов: ";
