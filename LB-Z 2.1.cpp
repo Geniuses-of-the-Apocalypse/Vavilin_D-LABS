@@ -178,11 +178,11 @@ int  main()
 	cout << "Вывод уменьшеного угла а2: ";
 	a2.decrease(size, 0); a2.display(); cout << endl;
 
-	cout << ">Сравнение углов." << endl;
-	cout << "a2 == a5: " << (a2 == a5 ? "Правда." : "Ложь.") << endl;
-	cout << "a2 != a5: " << (a2 != a5 ? "Правда." : "Ложь.") << endl;
-	cout << "a2 > a4: " << (a2 > a4 ? "Правда." : "Ложь.") << endl;
-	cout << "a2 < a4: " << (a2 < a4 ? "Правда." : "Ложь.") << endl << endl;
+	cout << ">>Сравнение углов." << endl;
+	cout << "a1 == a2: " << (a1.CRovno(a2)) << endl;
+	cout << "a1 != a2: " << (a1.CNeRovno(a2)) << endl;
+	cout << "a1 > a2: " << (a1.CBolsh(a2)) << endl;
+	cout << "a1 < a2: " << (a1.CMensh(a2)) << endl << endl;
 
 	cout << ">Ввод угла." << endl;
 	a1.input(); cout << endl;
