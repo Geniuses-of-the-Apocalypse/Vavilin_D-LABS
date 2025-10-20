@@ -89,6 +89,30 @@ void Angle::decrease(int deg, int min)
 	normalize();
 }
 
+bool Angle::CRovno(const Angle& other) const
+{
+	return degrees == other.degrees && minutes == other.minutes;
+}
+
+bool Angle::CNeRovno(const Angle& other) const
+{
+	return degrees != other.degrees || minutes != other.minutes;
+}
+
+bool Angle::CMensh(const Angle& other) const
+{
+	if (degrees != other.degrees)
+		return degrees < other.degrees;
+	return minutes < other.minutes;
+}
+
+bool Angle::CBolsh(const Angle& other) const
+{
+	if (degrees != other.degrees)
+		return degrees > other.degrees;
+	return minutes > other.minutes;
+}
+
 void Angle::display() const
 {
 	cout << degrees << "° " << minutes << "'." << endl;
