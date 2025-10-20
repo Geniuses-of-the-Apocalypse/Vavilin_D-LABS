@@ -3,156 +3,163 @@
 
 using namespace std;
 
-class Angle {
+class Angle
+{
 private:
-    int degrees;
-    int minutes;
-    
-    void normalize() {
-        int totalMinutes = degrees * 60 + minutes;
-        
-        totalMinutes %= 21600;
-        if (totalMinutes < 0) {
-            totalMinutes += 21600;
-        }
-        
-        degrees = totalMinutes / 60;
-        minutes = totalMinutes % 60;
-    }
+	int degrees;
+	int minutes;
+	void normalize();
 
 public:
-    Angle(int deg = 0, int min = 0) : degrees(deg), minutes(min) {
-        normalize();
-    }
+	Angle(int deg = 0, int min = 0);
 
-    double toRadians() const {
-        double totalDegrees = degrees + minutes / 60.0;
-        return totalDegrees * M_PI / 180.0;
-    }
+	double toRadians() const;
+	double getSin() const;
+	void increase(int deg, int min);
+	void decrease(int deg, int min);
+	void display() const;
 
-    double sin() const {
-        return std::sin(toRadians());
-    }
+	Angle operator + (const Angle& other) const
+	{
+		return Angle(degrees + other.degrees, minutes + other.minutes);
+	}
+	
+	Angle operator - (const Angle& other) const
+	{
+		return Angle(degrees + other.degrees, minutes + other.minutes);
+	}
 
-    double cos() const {
-        return std::cos(toRadians());
-    }
+	bool operator == (const Angle& other) const
+	{
+		return degrees == other.degrees && minutes == other.minutes;
+	}
 
-    double tan() const {
-        return std::tan(toRadians());
-    }
+	bool operator != (const Angle& other) const
+	{
+		return !(*this == other);
+	}
 
-    Angle& add(int deg, int min = 0) {
-        degrees += deg;
-        minutes += min;
-        normalize();
-        return *this;
-    }
+	bool operator < (const Angle& other) const
+	{
+		if (degrees != other.degrees)
+			return degrees < other.degrees;
+		return minutes < other.minutes;
+	}
 
-    Angle& subtract(int deg, int min = 0) {
-        degrees -= deg;
-        minutes -= min;
-        normalize();
-        return *this;
-    }
+	bool operator > (const Angle& other) const
+	{
+		return other < *this;
+	}
 
-    Angle operator+(const Angle& other) const {
-        return Angle(degrees + other.degrees, minutes + other.minutes);
-    }
+	friend ostream& operator << (ostream& os, const Angle& angle)
+	{
+		os << angle.degrees << "° " << angle.minutes << "'.";
+		return os;
+	}
 
-    Angle operator-(const Angle& other) const {
-        return Angle(degrees - other.degrees, minutes - other.minutes);
-    }
-
-    Angle& operator+=(const Angle& other) {
-        degrees += other.degrees;
-        minutes += other.minutes;
-        normalize();
-        return *this;
-    }
-
-    Angle& operator-=(const Angle& other) {
-        degrees -= other.degrees;
-        minutes -= other.minutes;
-        normalize();
-        return *this;
-    }
-
-    bool operator==(const Angle& other) const {
-        return degrees == other.degrees && minutes == other.minutes;
-    }
-
-    bool operator!=(const Angle& other) const {
-        return !(*this == other);
-    }
-
-    bool operator<(const Angle& other) const {
-        if (degrees != other.degrees) {
-            return degrees < other.degrees;
-        }
-        return minutes < other.minutes;
-    }
-
-    bool operator>(const Angle& other) const {
-        return other < *this;
-    }
-
-    bool operator<=(const Angle& other) const {
-        return !(other < *this);
-    }
-
-    bool operator>=(const Angle& other) const {
-        return !(*this < other);
-    }
-
-    int getDegrees() const { return degrees; }
-    int getMinutes() const { return minutes; }
-
-    friend ostream& operator<<(ostream& os, const Angle& angle) {
-        os << angle.degrees << "° " << angle.minutes << "'";
-        return os;
-    }
-
-    friend istream& operator>>(istream& is, Angle& angle) {
-        is >> angle.degrees >> angle.minutes;
-        angle.normalize();
-        return is;
-    }
+	friend istream& operator >> (istream& is, Angle& angle)
+	{
+		is >> angle.degrees >> angle.minutes;
+		angle.normalize();
+		return is;
+	}
 };
 
-int main() {
-    // Создание углов
-    Angle angle1(45, 30);  // 45° 30'
-    Angle angle2(400, 15); // 400° 15' (будет приведено к 40° 15')
-    Angle angle3(-90, 45); // -90° 45' (будет приведено к 269° 15')
+Angle::Angle(int deg, int min)
+{
+	degrees = deg;
+	minutes = min;
+	normalize();
+}
 
-    cout << "Угол 1: " << angle1 << endl;
-    cout << "Угол 2: " << angle2 << endl;
-    cout << "Угол 3: " << angle3 << endl;
+void Angle::normalize()
+{
+	degrees += minutes / 60;
+	minutes %= 60;
 
-    cout << "\nУгол 1 в радианах: " << angle1.toRadians() << endl;
-    cout << "Угол 2 в радианах: " << angle2.toRadians() << endl;
+	if (minutes < 0)
+	{
+		minutes += 60;
+		degrees -= 1;
+	}
 
-    cout << "\nСинус угла 1: " << angle1.sin() << endl;
-    cout << "Косинус угла 1: " << angle1.cos() << endl;
-    cout << "Тангенс угла 1: " << angle1.tan() << endl;
+	degrees = degrees % 360;
+	if (degrees < 0)
+		degrees += 360;
+}
 
-    Angle sum = angle1 + angle2;
-    Angle diff = angle1 - angle2;
-    
-    cout << "\nСумма углов 1 и 2: " << sum << endl;
-    cout << "Разность углов 1 и 2: " << diff << endl;
+double Angle::toRadians() const
+{
+	double totalDegs = degrees + minutes / 60.0;
+	return totalDegs * 3.14 / 189.0;
+}
 
-    angle1.add(30, 15);
-    cout << "\nУгол 1 после добавления 30°15': " << angle1 << endl;
-    
-    angle2.subtract(15, 30);
-    cout << "Угол 2 после вычитания 15°30': " << angle2 << endl;
+double Angle::getSin() const
+{
+	return sin(toRadians());
+}
 
-    cout << "\nСравнение углов:" << endl;
-    cout << "Угол 1 == Угол 2: " << (angle1 == angle2 ? "да" : "нет") << endl;
-    cout << "Угол 1 < Угол 2: " << (angle1 < angle2 ? "да" : "нет") << endl;
-    cout << "Угол 1 > Угол 2: " << (angle1 > angle2 ? "да" : "нет") << endl;
+void Angle::increase(int deg, int min)
+{
+	degrees += deg;
+	minutes += min;
+	normalize();
+}
 
-    return 0;
+void Angle::decrease(int deg, int min)
+{
+	degrees -= deg;
+	minutes -= min;
+	normalize();
+}
+
+void Angle::display() const
+{
+	cout << degrees << "° " << minutes << "'." << endl;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "RUS");
+
+	Angle a1(45, 30);
+	Angle a2(400, 15);
+	Angle a3(-90, 45);
+
+	cout << ">Вывод углов." << endl;
+	cout << "Угол a1 (45 и 30): " << a1 << endl;
+	cout << "Угол a2 (400 и 15): " << a2 << endl;
+	cout << "Угол a3 (-90 и 45): " << a3 << endl << endl;
+
+	cout << ">Перевод в радианы." << endl;
+	cout << "Угол а1: " << a1.toRadians() << endl;
+	cout << "Угол а2: " << a2.toRadians() << endl;
+	cout << "Угол а3: " << a3.toRadians() << endl << endl;
+
+	cout << ">Синусы углов." << endl;
+	cout << "Угол а1: " << a1.getSin() << endl;
+	cout << "Угол а2: " << a2.getSin() << endl;
+	cout << "Угол a3: " << a3.getSin() << endl << endl;
+
+	Angle sums = a1 + a2;
+	Angle difs = a1 - a2;
+
+	cout << ">Сумма углов a1 и a2: " << sums << endl;
+	cout << ">Разность углов a1 и a2: " << difs << endl << endl;
+
+	cout << ">Увеличение угла на 30 и 15." << endl;
+	a1.increase(30, 15);
+	cout << "Угол после увеличения: " << a1 << endl << endl;
+
+	cout << ">Уменьшение угла на 15 и 30." << endl;
+	a1.decrease(15, 30);
+	cout << "Угол после уменьшения: " << a1 << endl << endl;
+
+	cout << ">Сравнение углов." << endl;
+	cout << "Угол a1 == a2: " << (a1 == a2 ? "Правда" : "Ложь") << endl;
+	cout << "Угол a1 != a2: " << (a1 != a2 ? "Правда" : "Ложь") << endl;
+	cout << "Угол a1 > a2: " << (a1 > a2 ? "Правда" : "Ложь") << endl;
+	cout << "Угол a1 < a2: " << (a1 < a2 ? "Правда" : "Ложь") << endl;
+
+	return 0;
 }
