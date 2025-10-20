@@ -171,6 +171,7 @@ struct SAngle
 	}
 };
 
+//Вывод
 int main()
 {
 	setlocale(LC_ALL, "RUS");
@@ -209,6 +210,8 @@ int main()
 	cout << "a1 > a2: " << (a1 > a2) << endl;
 	cout << "a1 == a2: " << (a1 == a2) << endl;
 	cout << "a1 != a2: " << (a1 != a2) << endl << endl;
+
+	//===========================================================
 
 	cout << "===РЕАЛИЗАЦИЯ ЧЕРЕЗ СТРУКТУРУ===" << endl << endl;
 
