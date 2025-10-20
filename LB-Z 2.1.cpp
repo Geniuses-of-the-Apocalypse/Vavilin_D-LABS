@@ -1,3 +1,5 @@
+//Угол
+//====================
 #include <iostream>
 #include <cmath>
 
