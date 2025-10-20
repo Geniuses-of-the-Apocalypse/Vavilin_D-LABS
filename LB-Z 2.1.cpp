@@ -25,31 +25,13 @@ public:
 	void display() const;
 	void input();
 
-	//Перегрузки
+	bool CRovno(const Angle& other) const;
+	bool CNeRovno(const Angle& other) const;
+	bool CMensh(const Angle& other) const;
+	bool CBolsh(const Angle& other) const;
+
 	int getDegs() const { return degrees; }
 	int getMins() const { return minutes; }
-
-	bool operator == (const Angle& other) const
-	{
-		return degrees == other.degrees && minutes == other.minutes;
-	}
-
-	bool operator != (const Angle& other) const
-	{
-		return !(*this == other);
-	}
-
-	bool operator < (const Angle& other) const
-	{
-		if (degrees == other.degrees)
-			return minutes < other.minutes;
-		return degrees < other.degrees;
-	}
-
-	bool operator > (const Angle& other) const
-	{
-		return other < *this;
-	}
 };
 
 //Методы и конструкторы
