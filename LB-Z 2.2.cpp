@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//Класс
 class Angle
 {
 private:
@@ -19,6 +20,7 @@ public:
 	void decrease(int deg, int min);
 	void display() const;
 
+	//Перегрузки
 	Angle operator + (const Angle& other) const
 	{
 		return Angle(degrees + other.degrees, minutes + other.minutes);
@@ -65,6 +67,7 @@ public:
 	}
 };
 
+//Методы и тд.
 Angle::Angle(int deg, int min)
 {
 	degrees = deg;
@@ -118,6 +121,7 @@ void Angle::display() const
 	cout << degrees << "° " << minutes << "'." << endl;
 }
 
+//Вывод всего
 int main()
 {
 	setlocale(LC_ALL, "RUS");
