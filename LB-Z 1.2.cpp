@@ -22,27 +22,10 @@ public:
 	void decrease(int deg, int min = 0);
 	void display() const;
 
-	bool operator == (const Angle& other) const
-	{
-		return degrees == other.degrees && minutes == other.minutes;
-	}
-
-	bool operator != (const Angle& other) const
-	{
-		return !(*this == other);
-	}
-
-	bool operator < (const Angle& other) const
-	{
-		if (degrees != other.degrees)
-			return degrees < other.degrees;
-		return minutes < other.minutes;
-	}
-
-	bool operator > (const Angle& other) const
-	{
-		return other < *this;
-	}
+	bool CRovno(const Angle& other) const;
+	bool CNeRovno(const Angle& other) const;
+	bool CMensh(const Angle& other) const;
+	bool CBolsh(const Angle& other) const;
 };
 
 Angle::Angle(int deg, int min)
@@ -91,6 +74,30 @@ void Angle::decrease(int deg, int min)
 	degrees -= deg;
 	minutes -= min;
 	normalize();
+}
+
+bool Angle::CRovno(const Angle& other) const
+{
+	return degrees == other.degrees && minutes == other.minutes;
+}
+
+bool Angle::CNeRovno(const Angle& other) const
+{
+	return degrees != other.degrees || minutes != other.minutes;
+}
+
+bool Angle::CMensh(const Angle& other) const
+{
+	if (degrees != other.degrees)
+		return degrees < other.degrees;
+	return minutes < other.minutes;
+}
+
+bool Angle::CBolsh(const Angle& other) const
+{
+	if (degrees != other.degrees)
+		return degrees > other.degrees;
+	return minutes > other.minutes;
 }
 
 void Angle::display() const
@@ -171,7 +178,6 @@ struct SAngle
 	}
 };
 
-//Вывод
 int main()
 {
 	setlocale(LC_ALL, "RUS");
@@ -206,12 +212,10 @@ int main()
 	cout << "Угол после уменьшения: "; a1.display(); cout << endl;
 
 	cout << ">>Сравнение углов." << endl;
-	cout << "a1 < a2: " << (a1 < a2) << endl;
-	cout << "a1 > a2: " << (a1 > a2) << endl;
-	cout << "a1 == a2: " << (a1 == a2) << endl;
-	cout << "a1 != a2: " << (a1 != a2) << endl << endl;
-
-	//===========================================================
+	cout << "a1 == a2: " << (a1.CRovno(a2)) << endl;
+	cout << "a1 != a2: " << (a1.CNeRovno(a2)) << endl;
+	cout << "a1 > a2: " << (a1.CBolsh(a2)) << endl;
+	cout << "a1 < a2: " << (a1.CMensh(a2)) << endl << endl;
 
 	cout << "===РЕАЛИЗАЦИЯ ЧЕРЕЗ СТРУКТУРУ===" << endl << endl;
 
