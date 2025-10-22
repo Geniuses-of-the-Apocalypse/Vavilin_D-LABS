@@ -42,53 +42,59 @@ public:
 			cout << "Ошибка: Треугольник с такими сторонами не существует!" << endl;
 	}
 
-	bool isValidTriangle() const
-	{
-		return (a + b > c) && (a + c > b) && (b + c > a) && (a > 0) && (b > 0) && (c > 0);
-	}
-
-	void calculateAngles(double& angleA, double& angleB, double& angleC) const
-	{
-		if (!isValidTriangle())
-		{
-			angleA = angleB = angleC = 0;
-			return;
-		}
-
-		angleA = acos((b * b + c * c - a * a) / (2 * b * c)) * 180 / 3.14;
-		angleB = acos((a * a + c * c - b * b) / (2 * a * c)) * 180 / 3.14;
-		angleC = acos((a * a + b * b - c * c) / (2 * a * b)) * 180 / 3.14;
-	}
-
-	double calculateArea() const
-	{
-		if (!isValidTriangle())
-			return 0;
-
-		double sperimeter = sum() / 2;
-		return sqrt(sperimeter * (sperimeter - a) * (sperimeter - b) * (sperimeter - c));
-	}
-
-	double calculatePerim() const
-	{
-		return sum();
-	}
-
-	void displayTriangle() const
-	{
-		cout << "Треугольник со сторонами: ";
-		display(); cout << endl;
-
-		if (isValidTriangle())
-		{
-			double angleA, angleB, angleC;
-			calculateAngles(angleA, angleB, angleC);
-			
-		}
-		else
-			cout << "Ошибка: Треугольник не существует!" << endl;
-	}
+	bool isValidTriangle() const;
+	void calculateAngles(double& angleA, double& angleB, double& angleC) const;
+	double calculateArea() const;
+	double calculatePerim() const;
+	void displayTriangle() const;
 };
+
+bool Triangle::isValidTriangle() const
+{
+	return (a + b > c) && (a + c > b) && (b + c > a) && (a > 0) && (b > 0) && (c > 0);
+}
+
+void Triangle::calculateAngles(double& angleA, double& angleB, double& angleC) const
+{
+	if (!isValidTriangle())
+	{
+		angleA = angleB = angleC = 0;
+		return;
+	}
+
+	angleA = acos((b * b + c * c - a * a) / (2 * b * c)) * 180 / 3.14;
+	angleB = acos((a * a + c * c - b * b) / (2 * a * c)) * 180 / 3.14;
+	angleC = acos((a * a + b * b - c * c) / (2 * a * b)) * 180 / 3.14;
+}
+
+double Triangle::calculateArea() const
+{
+	if (!isValidTriangle())
+		return 0;
+
+	double sperimeter = sum() / 2;
+	return sqrt(sperimeter * (sperimeter - a) * (sperimeter - b) * (sperimeter - c));
+}
+
+double Triangle::calculatePerim() const
+{
+	return sum();
+}
+
+void Triangle::displayTriangle() const
+{
+	cout << "Треугольник со сторонами: ";
+	display(); cout << endl;
+
+	if (isValidTriangle())
+	{
+		double angleA, angleB, angleC;
+		calculateAngles(angleA, angleB, angleC);
+
+	}
+	else
+		cout << "Ошибка: Треугольник не существует!" << endl;
+}
 
 int main()
 {
