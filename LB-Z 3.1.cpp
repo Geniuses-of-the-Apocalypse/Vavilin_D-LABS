@@ -94,6 +94,9 @@ int main()
 {
 	setlocale(LC_ALL, "RUS");
 
+	cout << "ТРИАДЫ И ТРЕУГОЛЬНИКИ." << endl;
+	cout << "=========================" << endl;
+
 	Triad triad(3, 4, 5);
 	cout << "Тройка чисел: ";
 	triad.display();
