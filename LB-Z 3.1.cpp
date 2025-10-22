@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//Класс Триада
 class Triad
 {
 protected:
@@ -32,6 +33,7 @@ public:
 	}
 };
 
+//Класс Треугольник
 class Triangle : public Triad
 {
 public:
@@ -49,6 +51,7 @@ public:
 	void displayTriangle() const;
 };
 
+//Реализация функций
 bool Triangle::isValidTriangle() const
 {
 	return (a + b > c) && (a + c > b) && (b + c > a) && (a > 0) && (b > 0) && (c > 0);
@@ -96,6 +99,7 @@ void Triangle::displayTriangle() const
 		cout << "Ошибка: Треугольник не существует!" << endl;
 }
 
+//Вывод 
 int main()
 {
 	setlocale(LC_ALL, "RUS");
