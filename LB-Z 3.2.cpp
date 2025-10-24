@@ -1,6 +1,5 @@
 //HEX, BitString и Numbers (6) - Виртуальные классы.
 //===================================================
-
 #include <iostream>
 #include <string>
 
