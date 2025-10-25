@@ -359,7 +359,7 @@ int main()
     Number* hexDiff = hex1.substract(&hex2);
     cout << ">Разность hex1 - hex2: ";
     hexDiff->display();
-    cout << endl;
+    cout << endl << endl;
     delete hexDiff;
     
     //Класс BitString
@@ -386,7 +386,7 @@ int main()
     cout << ">Вывод bits1 and not bits2: ";
     Number* bitsDiff = bits1.substract(&bits2);
     bitsDiff->display();
-    cout << endl;
+    cout << endl << endl;
     delete bitsDiff;
     
     //Доп. операции
