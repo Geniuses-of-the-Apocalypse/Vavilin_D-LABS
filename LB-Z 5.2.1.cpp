@@ -15,11 +15,11 @@ private:
     
 public:
     LimitedStack();
-    void push(const T& element);
+    void push(const T& element); //Добавление элемента в стак
     T& top();
-    const T& top() const;
+    const T& top() const; //Опредлеяет верхушку стака
     void pop(); //Удаление верхушки стака
-    bool empty() const;
+    bool empty() const; 
     size_t size() const;
     size_t max_size() const;
     char* toString() const;
