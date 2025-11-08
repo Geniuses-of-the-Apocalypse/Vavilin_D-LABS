@@ -1,10 +1,13 @@
+//LimitedStack - Шаблонный класс.
+//Вариант: 6.
+//================================
 #include <iostream>
 #include <cstring>
 
 using namespace std;
 
 template<typename T, size_t MaxSize>
-class LimitedStack
+class LimitedStack //Сам шаблонный класс
 {
 private:
     T elements[MaxSize];
@@ -15,7 +18,7 @@ public:
     void push(const T& element);
     T& top();
     const T& top() const;
-    void pop();
+    void pop(); //Удаление верхушки стака
     bool empty() const;
     size_t size() const;
     size_t max_size() const;
@@ -25,6 +28,7 @@ public:
     void clear();
 };
 
+//Методы и конструкторы
 template<typename T, size_t MaxSize>
 LimitedStack<T, MaxSize>::LimitedStack() : currentSize(0) {}
 
@@ -150,6 +154,7 @@ istream& operator>>(istream& is, LimitedStack<T, MaxSize>& stack)
     return is;
 }
 
+//Вывод
 int main()
 {
     setlocale(LC_ALL, "RUS");
