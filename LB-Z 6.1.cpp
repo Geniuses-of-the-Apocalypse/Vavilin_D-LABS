@@ -27,4 +27,6 @@ int main()
     cout << (result2==1 ? "Истина." : "Ложь.") << endl;
     bool result3 = anyTrue(true); 
     cout << (result3==1 ? "Истина." : "Ложь.") << endl;
+
+    return 0;
 }
