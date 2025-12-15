@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//Класс число
 class Number
 {
 public:
@@ -13,10 +14,10 @@ public:
     virtual void display() const = 0;
     virtual Number* add(const Number* other) const = 0;
     virtual Number* substract(const Number* other) const = 0;
+    virtual void read(istream& is) = 0;
 };
 
-//==========================
-
+//Класс Hex с наследованием Number
 class Hex : public Number
 {
 private:
@@ -36,10 +37,15 @@ public:
     void display() const override;
     Number* add(const Number* other) const override;
     Number* substract(const Number* other) const override;
+    void read(istream& is) override;
     bool isZero() const;
     
     Hex& operator=(const Hex& other);
     bool operator==(const Hex& other) const;
+
+    //Перегрузки операторов для ввода и вывода
+    friend ostream& operator<<(ostream& os, const Hex& hex);
+    friend istream& operator>>(istream& is, Hex& hex);
 };
 
 int Hex::fromHexChar(char c) const
@@ -96,6 +102,10 @@ void Hex::display() const
     int start = SIZE - 1;
     while(start > 0 && digit[start] == 0)
         start--;
+    if (start == 0 && digit[0] == 0) {
+        cout << '0';
+        return;
+    }
     for (int i = start; i >= 0; i--)
         cout << toHexChar(digit[i]);
 }
@@ -140,6 +150,33 @@ Number* Hex::substract(const Number* other) const
     return result;
 }
 
+void Hex::read(istream& is)
+{
+    string hexStr;
+    is >> hexStr;
+    
+    // Проверка на допустимые символы
+    for (size_t i = 0; i < hexStr.length(); i++) {
+        char c = hexStr[i];
+        if (!((c >= '0' && c <= '9') || 
+              (c >= 'A' && c <= 'F') || 
+              (c >= 'a' && c <= 'f'))) {
+            initToZero();
+            return;
+        }
+    }
+    
+    // Преобразование строки в Hex
+    initToZero();
+    int len = hexStr.length();
+    if (len > SIZE)
+        len = SIZE;
+    for (int i = 0; i < len; i++) {
+        digit[len - 1 - i] = fromHexChar(hexStr[i]);
+    }
+    normalize();
+}
+
 bool Hex::isZero() const
 {
     for (int i = 0; i < SIZE; i++)
@@ -164,8 +201,27 @@ bool Hex::operator==(const Hex& other) const
     return true;
 }
 
-//=======================
+ostream& operator<<(ostream& os, const Hex& hex)
+{
+    int start = hex.SIZE - 1;
+    while(start > 0 && hex.digit[start] == 0)
+        start--;
+    if (start == 0 && hex.digit[0] == 0) {
+        os << '0';
+        return os;
+    }
+    for (int i = start; i >= 0; i--)
+        os << hex.toHexChar(hex.digit[i]);
+    return os;
+}
 
+istream& operator>>(istream& is, Hex& hex)
+{
+    hex.read(is);
+    return is;
+}
+
+//Класс BitString с наследованием Number
 class BitString : public Number
 {
 private:
@@ -183,6 +239,7 @@ public:
     void display() const override;
     Number* add(const Number* other) const override;
     Number* substract(const Number* other) const override;
+    void read(istream& is) override;
     BitString bitwiseAnd(const BitString& other) const;
     BitString bitwiseOr(const BitString& other) const;
     BitString bitwiseNot() const;
@@ -190,6 +247,9 @@ public:
     
     bool operator==(const BitString& other) const;
     BitString& operator=(const BitString& other);
+    
+    friend ostream& operator<<(ostream& os, const BitString& bitStr);
+    friend istream& operator>>(istream& is, BitString& bitStr);
 };
 
 void BitString::normalize()
@@ -236,6 +296,10 @@ void BitString::display() const
     int start = SIZE - 1;
     while (start > 0 && bits[start] == 0)
         start--;
+    if (start == 0 && bits[0] == 0) {
+        cout << '0';
+        return;
+    }
     for (int i = start; i >= 0; i--)
         cout << (char)('0' + bits[i]);
 }
@@ -272,6 +336,34 @@ Number* BitString::substract(const Number* other) const
     
     result->normalize();
     return result;
+}
+
+void BitString::read(istream& is)
+{
+    string bitStr;
+    is >> bitStr;
+    
+    // Проверка на допустимые символы (только 0 и 1)
+    for (size_t i = 0; i < bitStr.length(); i++) {
+        char c = bitStr[i];
+        if (c != '0' && c != '1') {
+            initToZero();
+            return;
+        }
+    }
+    
+    // Преобразование строки в BitString
+    initToZero();
+    int len = bitStr.length();
+    if (len > SIZE)
+        len = SIZE;
+    for (int i = 0; i < len; i++) {
+        if (bitStr[i] == '1')
+            bits[len - 1 - i] = 1;
+        else
+            bits[len - 1 - i] = 0;
+    }
+    normalize();
 }
 
 BitString BitString::bitwiseAnd(const BitString& other) const
@@ -332,51 +424,69 @@ BitString& BitString::operator=(const BitString& other)
     return *this;
 }
 
+ostream& operator<<(ostream& os, const BitString& bitStr)
+{
+    int start = bitStr.SIZE - 1;
+    while (start > 0 && bitStr.bits[start] == 0)
+        start--;
+    if (start == 0 && bitStr.bits[0] == 0) {
+        os << '0';
+        return os;
+    }
+    for (int i = start; i >= 0; i--)
+        os << (char)('0' + bitStr.bits[i]);
+    return os;
+}
+
+istream& operator>>(istream& is, BitString& bitStr)
+{
+    bitStr.read(is);
+    return is;
+}
+
 int main()
 {
     setlocale(LC_ALL, "RUS");
     
-    //Класс Hex
-    cout << ">>КЛАСС HEX." << endl;
-    cout << "=============" << endl;
+    //Класс Hex с использованием перегруженных операторов
+    cout << ">>КЛАСС HEX (с использованием перегруженных операторов)." << endl;
+    cout << "========================================================" << endl;
     
-    Hex hex1("1A3F");
-    Hex hex2("B2C");
+    Hex hex1, hex2;
     
-    cout << ">Вывод hex1: ";
-    hex1.display();
-    cout << endl;
+    cout << "Введите первое шестнадцатеричное число (например, 1A3F): ";
+    cin >> hex1;
     
-    cout << ">Вывод hex2: ";
-    hex2.display();
-    cout << endl;
+    cout << "Введите второе шестнадцатеричное число (например, B2C): ";
+    cin >> hex2;
+    
+    cout << "\n>Вывод hex1: " << hex1 << endl;
+    cout << ">Вывод hex2: " << hex2 << endl;
     
     Number* hexSum = hex1.add(&hex2);
-    cout << ">Сумма hex1 + hex2: ";
-    hexSum->display();
-    cout << endl;
+    cout << ">Сумма hex1 + hex2: " << *dynamic_cast<Hex*>(hexSum) << endl;
     delete hexSum;
     
     Number* hexDiff = hex1.substract(&hex2);
-    cout << ">Разность hex1 - hex2: ";
-    hexDiff->display();
-    cout << endl << endl;
+    cout << ">Разность hex1 - hex2: " << *dynamic_cast<Hex*>(hexDiff) << endl << endl;
     delete hexDiff;
     
-    //Класс BitString
-    cout << ">>КЛАСС BITSTRING." << endl;
-    cout << "===================" << endl;
+    cin.ignore();
     
-    BitString bits1("1101");
-    BitString bits2("1010");
+    //Класс BitString с использованием перегруженных операторов
+    cout << ">>КЛАСС BITSTRING (с использованием перегруженных операторов)." << endl;
+    cout << "==============================================================" << endl;
     
-    cout << ">Вывод bits1: ";
-    bits1.display();
-    cout << endl;
+    BitString bits1, bits2;
     
-    cout << ">Вывод bits2: ";
-    bits2.display();
-    cout << endl;
+    cout << "Введите первую битовую строку (например, 1101): ";
+    cin >> bits1;
+    
+    cout << "Введите вторую битовую строку (например, 1010): ";
+    cin >> bits2;
+    
+    cout << "\n>Вывод bits1: " << bits1 << endl;
+    cout << ">Вывод bits2: " << bits2 << endl;
     
     cout << ">Вывод bits1 or bits2: ";
     Number* bitSum = bits1.add(&bits2);
@@ -391,23 +501,20 @@ int main()
     delete bitsDiff;
     
     //Доп. операции
-    cout << ">>ДОПОЛНИТЕЛЬНЫЙ БИТОВЫЕ ОПЕРАЦИИ." << endl;
-    cout << "==============================================" << endl;
+    cout << ">>ДОПОЛНИТЕЛЬНЫЕ БИТОВЫЕ ОПЕРАЦИИ.3" << endl;
+    cout << "==================================" << endl;
     
     cout << ">Вывод bits1 and bits2: ";
     BitString andRes = bits1.bitwiseAnd(bits2);
-    andRes.display();
-    cout << endl;
+    cout << andRes << endl;
     
     cout << ">Вывод bits1 or bits2: ";
     BitString orRes = bits1.bitwiseOr(bits2);
-    orRes.display();
-    cout << endl;
+    cout << orRes << endl;
     
     cout << ">Вывод not bits1: ";
     BitString notRes = bits1.bitwiseNot();
-    notRes.display();
-    cout << endl;
+    cout << notRes << endl;
     
     return 0;
 }
