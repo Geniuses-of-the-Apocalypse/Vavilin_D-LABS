@@ -30,11 +30,24 @@ public:
 		return a + b + c;
 	}
 
-	void display() const
-	{
-		cout << "(" << a << ", " << b << ", " << c << ").";
-	}
+	// Дружественные функции для перегрузки операторов ввода и вывода
+	friend ostream& operator<<(ostream& os, const Triad& triad);
+	friend istream& operator>>(istream& is, Triad& triad);
 };
+
+// Перегрузка оператора вывода для Triad
+ostream& operator<<(ostream& os, const Triad& triad)
+{
+	os << "(" << triad.a << ", " << triad.b << ", " << triad.c << ")";
+	return os;
+}
+
+// Перегрузка оператора ввода для Triad
+istream& operator>>(istream& is, Triad& triad)
+{
+	is >> triad.a >> triad.b >> triad.c;
+	return is;
+}
 
 //Класс Треугольник
 class Triangle : public Triad
@@ -52,7 +65,33 @@ public:
 	double calculateArea() const;
 	double calculatePerim() const;
 	void displayTriangle() const;
+
+	// Дружественные функции для перегрузки операторов ввода и вывода
+	friend ostream& operator<<(ostream& os, const Triangle& triangle);
+	friend istream& operator>>(istream& is, Triangle& triangle);
 };
+
+// Перегрузка оператора вывода для Triangle
+ostream& operator<<(ostream& os, const Triangle& triangle)
+{
+	os << "Треугольник со сторонами: (" 
+	   << triangle.a << ", " << triangle.b << ", " << triangle.c << ")";
+	return os;
+}
+
+// Перегрузка оператора ввода для Triangle
+istream& operator>>(istream& is, Triangle& triangle)
+{
+	is >> triangle.a >> triangle.b >> triangle.c;
+	
+	// Проверка существования треугольника после ввода
+	if (!triangle.isValidTriangle())
+	{
+		cout << "Ошибка: Треугольник с такими сторонами не существует!" << endl;
+	}
+	
+	return is;
+}
 
 //Реализация функций
 bool Triangle::isValidTriangle() const
@@ -89,20 +128,24 @@ double Triangle::calculatePerim() const
 
 void Triangle::displayTriangle() const
 {
-	cout << "Треугольник со сторонами: ";
-	display(); cout << endl;
+	cout << *this << endl;  
 
 	if (isValidTriangle())
 	{
 		double angleA, angleB, angleC;
 		calculateAngles(angleA, angleB, angleC);
-
+		
+		cout << "Углы треугольника: " 
+			 << angleA << "°, " 
+			 << angleB << "°, " 
+			 << angleC << "°" << endl;
+		cout << "Периметр: " << calculatePerim() << endl;
+		cout << "Площадь: " << calculateArea() << endl;
 	}
 	else
 		cout << "Ошибка: Треугольник не существует!" << endl;
 }
 
-//Вывод 
 int main()
 {
 	setlocale(LC_ALL, "RUS");
@@ -111,9 +154,13 @@ int main()
 	cout << "=========================" << endl;
 
 	Triad triad(3, 4, 5);
-	cout << "Тройка чисел: ";
-	triad.display();
-	cout << endl << "Сумма чисел: " << triad.sum() << endl << endl;
+	cout << "Тройка чисел: " << triad << endl;  
+	cout << "Сумма чисел: " << triad.sum() << endl << endl;
+
+	Triad triad2;
+	cout << "Введите три числа для триады (через пробел): ";
+	cin >> triad2;  // Используем >>
+	cout << "Введенная триада: " << triad2 << endl << endl;
 
 	cout << "Треугольник 1: " << endl;
 	Triangle triangle(3, 4, 5);
@@ -122,20 +169,24 @@ int main()
 
 	cout << "Треугольник 2: " << endl;
 	Triangle triangle2(5, 12, 13);
+	cout << triangle2 << endl;  
 	triangle2.displayTriangle();
 	cout << endl;
 
-	cout << "Треугольник 3: " << endl;
-	Triangle triangle3(1, 2, 5);
-	triangle.displayTriangle();
+	Triangle triangle3;
+	cout << "Введите стороны треугольника (через пробел): ";
+	cin >> triangle3; 
+	cout << triangle3 << endl;
+	triangle3.displayTriangle();
 	cout << endl;
 
-	cout << "Треугольник 4: " << endl;
-	Triangle triangle4;
+	cout << "Треугольник 4 (неправильный): " << endl;
+	Triangle triangle4(1, 2, 5);
 	triangle4.displayTriangle();
 	cout << endl;
 
-	cout << "Треугольник 4 (Задаём стороны через сетеры):" << endl;
+	// Изменение треугольника через сеттеры
+	cout << "Изменяем треугольник 4 через сеттеры:" << endl;
 	triangle4.setA(6);
 	triangle4.setB(8);
 	triangle4.setC(10);
