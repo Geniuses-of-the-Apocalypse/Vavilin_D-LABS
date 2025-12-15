@@ -1,6 +1,9 @@
 //Угол - Конструктор.
 //Вариант: 6.
 //====================
+//Угол - Конструктор.
+//Вариант: 6.
+//====================
 #include <iostream>
 #include <cmath>
 
@@ -36,18 +39,12 @@ public:
 };
 
 //Методы и конструкторы
-Angle::Angle(int deg, int min)
+Angle::Angle(int deg, int min) : degrees(deg), minutes(min)
 {
-	degrees = deg;
-	minutes = min;
-	normalize();
+    normalize();
 }
 
-Angle::Angle(const Angle& other)
-{
-	degrees = other.degrees;
-	minutes = other.minutes;
-}
+Angle::Angle(const Angle& other) : degrees(other.degrees), minutes(other.minutes) {}
 
 void Angle::normalize()
 {
