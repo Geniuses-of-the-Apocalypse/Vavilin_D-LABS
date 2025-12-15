@@ -21,23 +21,35 @@ class AVLTree {
 
 public:
     AVLTree() : root(nullptr) {}
+    
+    AVLTree(const AVLTree& other) : root(nullptr) {
+        copyTree(other.root);
+    }
+    
+    AVLTree& operator=(const AVLTree& other) {
+        if (this != &other) {
+            clear();
+            copyTree(other.root);
+        }
+        return *this;
+    }
+    
+    ~AVLTree() {
+        clear();
+    }
 
-    // Поиск 
     bool poisk(T vrem) {
         return poiskR(root, vrem);
     }
 
-    // Добавление 
     void insert(T vrem) {
         root = insertR(root, vrem);
     }
     
-    // Удаление 
     void remove(T vrem) {
         root = removeR(root, vrem);
     }
     
-    // Превращение в строку
     string toString() {
         string result = "";
         toStringR(root, result);
@@ -45,7 +57,7 @@ public:
     }
     
     // Вывод в поток
-    friend ostream& operator<<(ostream& os, AVLTree& tree) {
+    friend ostream& operator<<(ostream& os, const AVLTree& tree) {
         tree.writeToStreamR(tree.root, os);
         return os;
     }
@@ -57,6 +69,7 @@ public:
         while (is >> value) {
             tree.insert(value);
         }
+        is.clear();
         return is;
     }
     
@@ -88,6 +101,15 @@ public:
     }
 
 private:
+    // Копирование дерева
+    void copyTree(Node* node) {
+        if (node) {
+            insert(node->vrem);
+            copyTree(node->left);
+            copyTree(node->right);
+        }
+    }
+    
     // Получение высоты узла
     int getHeight(Node* node) {
         if (node == nullptr) return 0;
@@ -251,28 +273,30 @@ private:
     }
     
     // Превращение в строку
-    void toStringR(Node* node, string& result) {
+    void toStringR(Node* node, string& result) const {
         if (node) {
             toStringR(node->left, result);
             if (!result.empty()) {
                 result += " ";
             }
-            result += to_string(node->vrem);
+            stringstream ss;
+            ss << node->vrem;
+            result += ss.str();
             toStringR(node->right, result);
         }
     }
     
     // Запись в поток
-    void writeToStreamR(Node* node, ostream& os) {
+    void writeToStreamR(Node* node, ostream& os) const {
         if (node) {
-            os << node->vrem << " ";
             writeToStreamR(node->left, os);
+            os << node->vrem << " ";
             writeToStreamR(node->right, os);
         }
     }
 
     // Получение глубины дерева
-    int getDepth(Node* node) {
+    int getDepth(Node* node) const {
         if (node == nullptr) return 0;
         int leftDepth = getDepth(node->left);
         int rightDepth = getDepth(node->right);
@@ -280,7 +304,7 @@ private:
     }
     
     // Рекурсивный вывод уровня
-    void printLevel(Node* node, int level, int spaces) {
+    void printLevel(Node* node, int level, int spaces) const {
         if (node == nullptr) {
             // Вывод пустых мест для выравнивания
             for (int i = 0; i < spaces; i++) {
@@ -291,20 +315,18 @@ private:
         }
         
         if (level == 1) {
-            // Вывод узла с отступами
             for (int i = 0; i < spaces; i++) {
                 cout << " ";
             }
             cout << node->vrem << "(" << node->height << ")";
         } else if (level > 1) {
-            // Рекурсивный вывод следующего уровня
             printLevel(node->left, level - 1, spaces / 2);
             printLevel(node->right, level - 1, spaces / 2);
         }
     }
     
     // Вертикальный вывод дерева
-    void printVertical() {
+    void printVertical() const {
         if (root == nullptr) {
             cout << "Дерево пустое" << endl;
             return;
@@ -319,8 +341,8 @@ private:
         }
     }
     
-    // Иной вертикальный вывод
-    void printVerticalCompact(Node* node, int space) {
+    // Ещё один вертикальный вывод (альтернативный)
+    void printVerticalCompact(Node* node, int space) const {
         if (node == nullptr) return;
         space += 10;
         printVerticalCompact(node->right, space);
@@ -333,7 +355,7 @@ private:
     }
     
     // Вспомогательная функция для max
-    int max(int a, int b) {
+    int max(int a, int b) const {
         return (a > b) ? a : b;
     }
 };
@@ -350,49 +372,40 @@ int main() {
     tree.insert(60);
     tree.insert(80);
     
-    cout << "Добавляем элементы: " << tree << endl;
+    cout << "Содержимое дерева: " << tree << endl;
+    
+    cout << "\nПодробный вывод дерева:" << endl;
     tree.print();
     
-    cout << "\nКомпактный вывод:" << endl;
-    tree.printCompact();
+    cout << "Есть ли 30 в дереве: " << (tree.poisk(30) ? "Да" : "Нет") << endl;
+    cout << "Есть ли 55 в дереве: " << (tree.poisk(55) ? "Да" : "Нет") << endl;
     
-    cout << "Есть ли 30 в дереве: " << tree.poisk(30) << endl;
-    cout << "Есть ли 55 в дереве: " << tree.poisk(55) << endl;
-    
-    cout << "Содержимое дерева: " << tree.toString() << endl;
-    
-    cout << "Удаляем элемент 30" << endl;
+    cout << "\nУдаляем элемент 30" << endl;
     tree.remove(30);
-    tree.print();
-    cout << "Содержимое после удаления: " << tree.toString() << endl;
+    cout << "Содержимое после удаления: " << tree << endl;
    
-    cout << "Пустое дерево: " << tree.empty() << endl;
+    cout << "\nПустое дерево: " << (tree.empty() ? "Да" : "Нет") << endl;
 
-    // Тест балансировки
-    AVLTree<int> balancedTree;
-    cout << "\nТест балансировки AVL:" << endl;
-    balancedTree.insert(10);
-    balancedTree.insert(20);
-    balancedTree.insert(30);
-    balancedTree.insert(40);
-    balancedTree.insert(50);
-    balancedTree.insert(25);
-    balancedTree.print();
-    
-    // Очистка
-    tree.clear();
-    cout << "После очистки дерево пустое: " << tree.empty() << endl;
-    
-    // Чтение из потока
+    // Тест чтения из потока
     AVLTree<int> tree2;
-    stringstream ss;
-    ss << "100 50 150 25 75 125 175";
-
+    stringstream ss("100 50 150 25 75 125 175");
+    
+    cout << "\nЧтение дерева из строки..." << endl;
     ss >> tree2;
     cout << "Новое дерево из строки: " << tree2 << endl;
+    
+    cout << "\nПодробный вывод нового дерева:" << endl;
     tree2.print();
-    tree2.clear();
+    
+    // Тест с другими типами данных
+    AVLTree<string> tree3;
+    tree3.insert("banana");
+    tree3.insert("apple");
+    tree3.insert("cherry");
+    tree3.insert("date");
+    
+    cout << "\nДерево строк: " << tree3 << endl;
     
     return 0;
 }
-//Кошмар...
+//Ужас...
