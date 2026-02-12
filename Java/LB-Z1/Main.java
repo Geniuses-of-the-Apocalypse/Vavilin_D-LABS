@@ -1,3 +1,7 @@
+//Угол - Класс.
+//Вариант: 6.
+//=======================
+
 //package ru.guu.java;
 import java.util.Scanner;
 
