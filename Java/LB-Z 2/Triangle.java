@@ -11,12 +11,12 @@ public class Triangle extends Triad
         super(a, b, c); //Вызов конструктор Родителя
     }
 
-    public boolean isValidTriangle()
+    public boolean isValidTriangle() //Проверка на существование треугольника
     {
         return (a + b > c) && (a + c > b) && (b + c > a) && (a > 0) && (b > 0) && (c > 0);
     }
 
-    public void calculateAngles(double angleA, double angleB, double angleC)
+    public void calculateAngles(double angleA, double angleB, double angleC) //Расчёт углов
     {
         if (!isValidTriangle())
         {
@@ -29,7 +29,7 @@ public class Triangle extends Triad
         angleC = Math.acos((a * a + b * b - c * c) / (2 * a * b)) * 180/3.14;
     }
 
-    public double calculateArea()
+    public double calculateArea() //Площадь
     {
         if (!isValidTriangle())
             return 0;
@@ -37,7 +37,7 @@ public class Triangle extends Triad
         return Math.sqrt(sperimetr * (sperimetr - a) * (sperimetr - b) * (sperimetr - c));
     }
 
-    public double calculatePerim()
+    public double calculatePerim() //Периметр
     {
         return sums();
     }
