@@ -1,3 +1,7 @@
+//HEX, BitString и Numbers - Виртуальные классы.
+//Вариант: 6.
+//===================================================
+
 package JAVA.GUU.RU.LAB3;
 
 public class Main
