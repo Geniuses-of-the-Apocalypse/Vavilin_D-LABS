@@ -1,6 +1,6 @@
 /*
-=== Немного Теории ===
-Интерфейс -  определяет набор требований к классу, а класс применяет эти требования.
+===Немного Теории===
+Интерфейс определяет набор требований к классу, а класс применяет эти требования.
 instanceof - проверяет объект на пренадлежность к классу.
 IllegalArgumentException - выводит сообщение при недопусимом аргументе.
 Override - переопределяет метод.
@@ -11,12 +11,6 @@ package JAVA.GUU.RU.LAB3;
 
 import java.util.Scanner;
 import java.lang.Math;
-
-interface Array
-{
-   Array add(Array other);
-   void display();
-}
 
 class Hex implements Array //Класс для 16-ричных чисел
 {
