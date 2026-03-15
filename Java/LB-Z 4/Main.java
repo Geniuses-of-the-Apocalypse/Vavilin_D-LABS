@@ -72,7 +72,7 @@ public class Main {
         intArray.set(0, 10);
         System.out.println("После замены первого элемента: " + intArray);
 
-        System.out.println("Содержит ли массив 10? " + intArray.contains(10));
+        System.out.println("Содержит ли массив 10?: " + intArray.contains(10));
         System.out.println("Индекс элемента 8: " + intArray.indexOf(8));
 
         intArray.clear();
