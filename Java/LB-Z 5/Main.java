@@ -12,6 +12,7 @@ public class Main
 {
     public static void main(String[] args) {
         System.out.println("Регулярные выражения.");
+        System.out.println("=".repeat(30));
 
         //Путь к файлу
         String filePath;
@@ -52,3 +53,4 @@ public class Main
         }
     }
 }
+
