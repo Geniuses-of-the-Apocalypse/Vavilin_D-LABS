@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Выбор метода вычисления НОК через XML -->
+    <bean id="lcmCalculator" class="ru.rut_miit.lab1cdispring.Component.LcmCalculatorComponent">
+        <property name="lcmCalculator">
+            <ref bean="gcdBasedLcm"/>
+            <!-- Варианты: gcdBasedLcm, primeFactorizationLcm, iterationBasedLcm -->
+        </property>
+    </bean>
+
+    <bean id="gcdBasedLcm" class="ru.rut_miit.lab1cdispring.LcmMethods.GcdBasedLcm"/>
+    <bean id="primeFactorizationLcm" class="ru.rut_miit.lab1cdispring.LcmMethods.PrimeFactorizationLcm"/>
+    <bean id="iterationBasedLcm" class="ru.rut_miit.lab1cdispring.LcmMethods.IterationBasedLcm"/>
+</beans>
