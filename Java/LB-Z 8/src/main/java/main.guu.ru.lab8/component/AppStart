@@ -1,0 +1,62 @@
+package main.guu.ru.lab8.component;
+
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import main.guu.ru.lab8.model.Edge;
+
+@Service
+@Log4j2
+public class AppStart {
+    @Autowired
+    private GraphManager graphManager;
+    @Autowired
+    private RouteManager routeManager;
+    @Autowired
+    private CarPathCalculator carCalculator;
+    @Autowired
+    private PedestrianPathCalculator pedestrianCalculator;
+    @Autowired
+    private PublicTransportPathCalculator publicTransportCalculator;
+
+    public void start() {
+        //Создание графа для разных видов транспорта
+        //Машина
+        graphManager.addEdge(new Edge("A", "B", 2, true, false, false));
+        graphManager.addEdge(new Edge("B", "E", 3, true, false, false));
+
+        //Пешеход
+        graphManager.addEdge(new Edge("A", "C", 50, false, true, false));
+        graphManager.addEdge(new Edge("B", "E", 50, false, true, false));
+
+        //Автобус
+        graphManager.addEdge(new Edge("A", "D", 20, false, false, true));
+        graphManager.addEdge(new Edge("D", "E", 20, false, false, true));
+
+        //Общее ребро
+        graphManager.addEdge(new Edge("A", "E", 100, true, true, true));
+        graphManager.addEdge(new Edge("B", "E", 10, true, true, true));
+
+        log.info("Граф создан: {}", graphManager);
+
+        //Установка маршрута
+        routeManager.setRoute("A", "E");
+
+        log.info("");
+        log.info("=== РЕЗУЛЬТАТЫ РАСЧЁТА ===");
+        log.info(carCalculator.toString());
+        log.info(pedestrianCalculator.toString());
+        log.info(publicTransportCalculator.toString());
+
+        //Изменение маршрута
+        log.info("");
+        log.info("=== ИЗМЕНЕНИЕ МАРШРУТА ===");
+        routeManager.setRoute("B", "E");
+
+        log.info("");
+        log.info("=== НОВЫЕ РЕЗУЛЬТАТЫ ===");
+        log.info(carCalculator.toString());
+        log.info(pedestrianCalculator.toString());
+        log.info(publicTransportCalculator.toString());
+    }
+}
