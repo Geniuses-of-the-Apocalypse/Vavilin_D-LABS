@@ -1,3 +1,6 @@
+//Графы - Декоратор (Decorator).
+//================================
+
 package main.guu.ru.lab7;
 
 import org.springframework.boot.SpringApplication;
