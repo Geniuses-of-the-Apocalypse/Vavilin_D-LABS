@@ -1,3 +1,6 @@
+//Графы - События и Наблюдатель (Observer).
+//==========================================
+
 package main.guu.ru.lab8;
 
 import org.springframework.boot.SpringApplication;
