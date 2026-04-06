@@ -16,9 +16,9 @@ public class Lab8Application {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Lab8Application.class);
 
-        app.setBanner((environment, sourceClass, out) -> out.print("┏━╸┏━┓┏━┓┏━┓╻ ╻   ┏━┓┏━┓╺┳╸╻ ╻   ┏━╸╻┏┓╻╺┳┓┏━╸┏━┓   ┏━┓\n" +
-                "┃╺┓┣┳┛┣━┫┣━┛┣━┫   ┣━┛┣━┫ ┃ ┣━┫   ┣╸ ┃┃┗┫ ┃┃┣╸ ┣┳┛   ┏━┛\n" +
-                "┗━┛╹┗╸╹ ╹╹  ╹ ╹   ╹  ╹ ╹ ╹ ╹ ╹   ╹  ╹╹ ╹╺┻┛┗━╸╹┗╸   ┗━╸\n".toUpperCase()));
+        app.setBanner((environment, sourceClass, out) -> out.print("┏━╸┏━┓┏━┓┏━┓╻ ╻   ┏━┓┏━┓╺┳╸╻ ╻   ┏━╸╻┏┓╻╺┳┓┏━╸┏━┓   ┏━┓         ┏━┓┏┓ ┏━┓┏━╸┏━┓╻ ╻┏━╸┏━┓\n" +
+                "┃╺┓┣┳┛┣━┫┣━┛┣━┫   ┣━┛┣━┫ ┃ ┣━┫   ┣╸ ┃┃┗┫ ┃┃┣╸ ┣┳┛   ┏━┛   ╺━╸   ┃ ┃┣┻┓┗━┓┣╸ ┣┳┛┃┏┛┣╸ ┣┳┛\n" +
+                "┗━┛╹┗╸╹ ╹╹  ╹ ╹   ╹  ╹ ╹ ╹ ╹ ╹   ╹  ╹╹ ╹╺┻┛┗━╸╹┗╸   ┗━╸         ┗━┛┗━┛┗━┛┗━╸╹┗╸┗┛ ┗━╸╹┗╸\n".toUpperCase()));
 
         context = app.run(args);
 
