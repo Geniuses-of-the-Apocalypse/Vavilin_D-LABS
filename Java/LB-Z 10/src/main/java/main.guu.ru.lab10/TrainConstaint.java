@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = TrainValidator.class)
 public @interface TrainConstraint {
-    String message() default "Длина состава (${validatedObject.dlinaVUslovnihVagonah}) не равна сумме длин вагонов (${validatedObject.getFakticheskayaDlina()})";
+    String message() default "Длина состава не равна сумме длин вагонов.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
