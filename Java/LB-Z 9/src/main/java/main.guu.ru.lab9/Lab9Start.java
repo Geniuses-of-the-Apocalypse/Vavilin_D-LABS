@@ -3,10 +3,13 @@
 
 package main.guu.ru.lab9;
 
+import main.guu.ru.lab9.PureWagon;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
@@ -16,7 +19,16 @@ public class Lab9Start
 {
     public static void main(String args[]) throws Exception {
 
-        ValidatorFactory factory = Validation.byDefaultProvider().configure().messageInterpolator(new ParameterMessageInterpolator()).buildValidatorFactory();
+        URL url = Lab9Start.class.getClassLoader().getResource("validation.xml");
+        System.out.println("validation.xml найден: " + url);
+
+        URL url2 = Lab9Start.class.getClassLoader().getResource("constraints.xml");
+        System.out.println("constraints.xml найден: " + url2);
+
+        InputStream xmlStream = Lab9Start.class.getClassLoader().getResourceAsStream("constraints.xml");
+        System.out.println("constraints.xml загружен: " + (xmlStream != null ? "да" : "нет"));
+
+        ValidatorFactory factory = Validation.byDefaultProvider().configure().addMapping(xmlStream).messageInterpolator(new ParameterMessageInterpolator()).buildValidatorFactory();
         Validator validator = factory.getValidator();
 
         try {
@@ -43,6 +55,8 @@ public class Lab9Start
 
             //Проверка класса PureWagon
             System.out.println("\n=== Валидация PureWagon (XML) ===");
+
+
 
             PureWagon pureWagon = new PureWagon();
             pureWagon.setId("1");
