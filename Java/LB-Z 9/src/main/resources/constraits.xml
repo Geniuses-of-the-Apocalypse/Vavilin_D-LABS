@@ -5,10 +5,9 @@
         xsi:schemaLocation="http://jboss.org/xml/ns/javax/validation/mapping/validation-mapping-1.1.xsd"
         version="1.1">
 
-    <!-- Правила для класса PureWagon -->
-    <bean class="ru.miit.lab4validate.PureWagon" ignore-annotations="false">
+    <bean class="main.guu.ru.lab9.PureWagon" ignore-annotations="true">
 
-        <!-- Номер вагона -->
+        <!-- Поле nomVag -->
         <field name="nomVag">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Номер для вагона должен быть задан</message>
@@ -19,34 +18,37 @@
             </constraint>
         </field>
 
-        <!-- ID -->
+        <!-- Поле id -->
         <field name="id">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Идентификатор для вагона должен быть задан</message>
             </constraint>
         </field>
 
-        <!-- НПФ (Назначение Плана Формирования) -->
+        <!-- Поле npf -->
         <field name="npf">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Назначение плана формирования для вагона должно быть задано</message>
             </constraint>
-            <constraint annotation="javax.validation.constraints.Min">
-                <message>Назначение плана формирования для вагона должно быть минимум 4 символа</message>
-                <element name="value">4</element>
+            <constraint annotation="javax.validation.constraints.Size">
+                <message>Назначение плана формирования должно быть минимум 4 символа</message>
+                <element name="min">4</element>
             </constraint>
         </field>
 
-        <!-- Порядковый номер -->
+        <!-- Поле npp - для int/Integer используем Min/Max -->
         <field name="npp">
-            <constraint annotation="org.hibernate.validator.constraints.Range">
-                <message>Порядковый номер вагона в составе для вагона должен быть не меньше 1 и не больше 160</message>
-                <element name="min">1</element>
-                <element name="max">170</element>
+            <constraint annotation="javax.validation.constraints.Min">
+                <message>Порядковый номер вагона должен быть не меньше 1</message>
+                <element name="value">1</element>
+            </constraint>
+            <constraint annotation="javax.validation.constraints.Max">
+                <message>Порядковый номер вагона должен быть не больше 170</message>
+                <element name="value">170</element>
             </constraint>
         </field>
 
-        <!-- Станция назначения -->
+        <!-- Поле esrNazV -->
         <field name="esrNazV">
             <constraint annotation="javax.validation.constraints.Size">
                 <message>Станция назначения для вагона должна быть минимум 6 символов</message>
@@ -54,7 +56,7 @@
             </constraint>
         </field>
 
-        <!-- Условная длинна -->
+        <!-- Поле udl -->
         <field name="udl">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Условная длина для вагона должна быть задана</message>
@@ -64,83 +66,6 @@
                 <element name="value">1</element>
             </constraint>
         </field>
-    </bean>
 
-    <!-- Правила для класса TrainComposition -->
-    <bean class="ru.miit.lab4validate.TrainComposition" ignore-annotations="false">
-
-        <!-- ID Состава -->
-        <field name="compositionId">
-            <constraint annotation="javax.validation.constraints.NotNull">
-                <message>Идентификатор состава должен быть задан</message>
-            </constraint>
-            <constraint annotation="javax.validation.constraints.Pattern">
-                <message>Идентификатор состава должен соответствовать формату XX-1234</message>
-                <element name="regexp">^[A-Z]{2}-\d{4}$</element>
-            </constraint>
-        </field>
-
-        <!-- Номер поезда -->
-        <field name="trainNumber">
-            <constraint annotation="javax.validation.constraints.NotNull">
-                <message>Номер поезда должен быть задан</message>
-            </constraint>
-            <constraint annotation="javax.validation.constraints.Pattern">
-                <message>Номер поезда должен быть формата 1234А</message>
-                <element name="regexp">^\d{4}[А-Я]$</element>
-            </constraint>
-        </field>
-
-        <!-- Дата формирования -->
-        <field name="formationDate">
-            <constraint annotation="javax.validation.constraints.NotNull">
-                <message>Дата формирования состава должна быть задана</message>
-            </constraint>
-            <constraint annotation="javax.validation.constraints.Past">
-                <message>Дата формирования не может быть в будущем</message>
-            </constraint>
-        </field>
-
-        <!-- Станция отправления -->
-        <field name="departureStation">
-            <constraint annotation="javax.validation.constraints.Size">
-                <message>Станция отправления должна быть от 1 до 100 символов</message>
-                <element name="min">1</element>
-                <element name="max">100</element>
-            </constraint>
-        </field>
-
-        <!-- Станция назначения -->
-        <field name="arrivalStation">
-            <constraint annotation="javax.validation.constraints.Size">
-                <message>Станция назначения должна быть от 1 до 100 символов</message>
-                <element name="min">1</element>
-                <element name="max">100</element>
-            </constraint>
-        </field>
-
-        <!-- Общая длина -->
-        <field name="totalLength">
-            <constraint annotation="javax.validation.constraints.Min">
-                <message>Общая длина состава должна быть больше 0</message>
-                <element name="value">1</element>
-            </constraint>
-            <constraint annotation="javax.validation.constraints.Max">
-                <message>Общая длина состава не может превышать 1500 метров</message>
-                <element name="value">1500</element>
-            </constraint>
-        </field>
-
-        <!-- Общий вес -->
-        <field name="totalWeight">
-            <constraint annotation="javax.validation.constraints.Min">
-                <message>Вес состава должен быть больше 0 тонн</message>
-                <element name="value">1</element>
-            </constraint>
-            <constraint annotation="javax.validation.constraints.Max">
-                <message>Вес состава не может превышать 20000 тонн</message>
-                <element name="value">20000</element>
-            </constraint>
-        </field>
     </bean>
 </constraint-mappings>
