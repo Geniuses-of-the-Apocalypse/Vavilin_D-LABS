@@ -1,3 +1,6 @@
+//Состав - Работа с Docker, Postgres SQL, MyBatis и Swagger.
+//===========================================================
+
 package main.guu.ru.lab11;
 
 import org.springframework.boot.SpringApplication;
