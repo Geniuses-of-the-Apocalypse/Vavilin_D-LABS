@@ -1,11 +1,11 @@
 import csv
 from typing import Optional
 
-CSV_FILE = """"\
-date, item, price,
-1983-04-01,soda,325.6
-2001-03-25,chocopie,194.2
-1997-02-13,sup,204.7
+CSV_FILE = """\
+item,quantity,price
+tank,14,1020.3
+plane,18,305.2
+car,2,26.7
 """
 
 # 1
