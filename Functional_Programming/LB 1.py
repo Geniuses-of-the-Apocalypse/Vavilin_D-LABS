@@ -15,20 +15,26 @@ def parse_csv(data: str) -> list[dict]:
 
 # ===( 2 )===
 def compute_revenue(rows: list[dict]) -> float:
-    return sum(map(lambda x:int(x["quantity"]) * float (x["price"]), rows))
+    return sum(map(lambda x:int(x["quantity"]) * float(x["price"]), rows))
 
 # ===( 3 )===
 def top_item(rows: list[dict]) -> Optional[dict]:
-    return max(rows, key=lambda row: int(row["quantity"]) * float(row["price"]), default=None)
+    if not rows:
+        return None
+    try:
+        return max(rows, key=lambda x: int(x["quantity"]) * float(x["price"]))
+    except (ValueError, TypeError, KeyError):
+        return None
 
-# === main ===
+# main
 rows = parse_csv(CSV_FILE)
 
-print(">>Исходные данные: ", rows)
+print("\n>>Исходные данные:", rows)
 
-print("\n>>Выручка: ", compute_revenue(rows))
+print("\n>>Выручка:", compute_revenue(rows))
 
-print("\n>>Максимальная выручка: ", top_item(rows))
+print("\n>>Максимальная выручка:", top_item(rows))
+
 
 # ===( 4 )===
 
