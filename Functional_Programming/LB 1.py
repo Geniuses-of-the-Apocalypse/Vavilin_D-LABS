@@ -3,10 +3,10 @@ from typing import Optional
 
 CSV_FILE = """\
 item,quantity,price
-tank,14,1020.5
-plane,19,306.4
-car,10,124.3
-tractor,24,250.3
+tank,14.0,1020.5
+plane,19.0,306.4
+car,10.0,124.3
+tractor,24.0,250.3
 """
 
 # ===( 1 )===
@@ -15,16 +15,11 @@ def parse_csv(data: str) -> list[dict]:
 
 # ===( 2 )===
 def compute_revenue(rows: list[dict]) -> float:
-    return sum(map(lambda x:int(x["quantity"]) * float(x["price"]), rows))
+    return sum(map(lambda x:float(x["quantity"]) * float(x["price"]), rows))
 
 # ===( 3 )===
 def top_item(rows: list[dict]) -> Optional[dict]:
-    if not rows:
-        return None
-    try:
-        return max(rows, key=lambda x: int(x["quantity"]) * float(x["price"]))
-    except (ValueError, TypeError, KeyError):
-        return None
+        return max(rows, key=lambda x: float(x["quantity"]) * float(x["price"]))
 
 # main
 rows = parse_csv(CSV_FILE)
