@@ -27,10 +27,8 @@ def top_item(rows: list[dict]) -> Optional[dict]:
         return float(x["quantity"]) * float(x["price"])
 
     def my_max(items: list[dict]) -> dict:
-        # база рекурсии: один элемент — он и есть максимум
         if len(items) == 1:
             return items[0]
-        # рекурсивный шаг: max(голова, максимум хвоста)
         head = items[0]
         tail_best = my_max(items[1:])
         return head if revenue(head) >= revenue(tail_best) else tail_best
