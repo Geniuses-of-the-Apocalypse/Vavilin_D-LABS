@@ -11,8 +11,8 @@ def count_word_frequncies(words: list[str]) -> dict[str, int]:
     return dict(Counter(words))
 
 #===( 3 )===
-def top_word(freq: dict[str, int]) -> Option[str]: #Нужен фикс
-    return max(freq, key=freq.get)
+def top_word(freq: dict[str, int]) -> Optional[str]:
+   return max(freq, key=freq.get) if freq else None 
 
 # === main ===
 print(split_words("Привет, мир! Hello, world... 42 раза"))
