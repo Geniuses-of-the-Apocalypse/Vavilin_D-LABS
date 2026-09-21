@@ -1,3 +1,4 @@
+#Замена max
 import csv
 from typing import Optional
 
