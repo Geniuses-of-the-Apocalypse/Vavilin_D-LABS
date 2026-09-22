@@ -1,0 +1,1 @@
+SELECT Surname, Tel FROM lab2.Student;

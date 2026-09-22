@@ -1,0 +1,1 @@
+SELECT * FROM lab2.Student WHERE Tel IS NOT NULL OR Tel='';
