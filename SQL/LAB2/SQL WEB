@@ -1,0 +1,126 @@
+-- Ссылка на сайт: https://onecompiler.com/mysql
+
+-- === Таблица Студентов ===
+CREATE TABLE Student (
+    idStudent INT PRIMARY KEY,
+    Surname VARCHAR(50),
+    Name VARCHAR(50),
+    Tel VARCHAR(20),
+    Address VARCHAR(255)
+);
+
+INSERT INTO Student (idStudent, Surname, Name, Tel, Address) VALUES
+(2, 'Lenin', 'Ilia', '3894673974', 'Michurinsk, d. 78'),
+(4, 'Jirinovsky', 'Petr', '2345', 'Skolkovo, d. 23'),
+(8, 'Stalin', 'Vladimir', '34332894403', 'Revashol, d. 65'),
+(16, 'Kerenski', 'Stepan', '2345', 'Penza, d. 43'),
+(32, 'Ushakov', 'Vladimir', '234567', 'Volgograd, d. 78'),
+(64, 'Visotsky', 'Konstantin', '84953367543', 'Urupinsk, d. 65');
+
+SELECT '>>Таблица Студентов >> 1.' As MESSAGE;
+SELECT * FROM Student;
+
+-- === Таблица Оценок ===
+CREATE TABLE Matks (
+    idMarks INT PRIMARY KEY,
+    Subject VARCHAR(50),
+    Date_mark DATE,
+    Mark INT,
+    Student_idStudent INT,
+    -- Создаем связь с таблицей Students
+    FOREIGN KEY (Student_idStudent) REFERENCES Student(idStudent) 
+    ON DELETE CASCADE
+);
+
+INSERT INTO Matks (idMarks, Subject, Date_mark, Mark, Student_idStudent) VALUES
+(1, 'Math', '2007-03-20', 3, 2),
+(2, 'Math', '2007-03-20', 5, 4),
+(3, 'Math', '2007-03-20', 2, 8),
+(4, 'Math', '2007-03-20', 4, 16),
+(5, 'Math', '2007-03-20', 3, 32),
+(6, 'Math', '2007-03-20', 2, 64),
+(7, 'Physic', '2007-06-20', 2, 2),
+(8, 'Physic', '2007-06-20', 4, 4),
+(9, 'Physic', '2007-06-20', 5, 8),
+(10, 'Physic', '2007-06-20', 4, 16),
+(11, 'Physic', '2007-06-20', 5, 32),
+(12, 'Physic', '2007-06-20', 3, 64),
+(13, 'Informatica', '2009-03-20', 3, 2),
+(14, 'Informatica', '2009-03-20', 2, 4),
+(15, 'Informatica', '2009-03-20', 5, 8),
+(16, 'Informatica', '2009-03-20', 4, 16),
+(17, 'Informatica', '2009-03-20', 3, 32),
+(18, 'Informatica', '2009-03-20', 4, 64),
+(19, 'Management', '2009-06-20', 4, 2),
+(20, 'Management', '2009-06-20', 5, 4),
+(21, 'Management', '2009-06-20', 3, 8),
+(22, 'Management', '2009-06-20', 2, 16),
+(23, 'Management', '2009-06-20', 3, 32),
+(24, 'Management', '2009-06-20', 4, 64);
+
+SELECT '>>Таблица Оценок.' As MESSAGE;
+SELECT * FROM Matks;
+
+-- ===( 2 )===
+SELECT '>>2.' As MESSAGE;
+SELECT Surname, Tel FROM Student;
+
+-- ===( 3 )===
+SELECT '>>3.' As MESSAGE;
+SELECT * FROM Student WHERE Tel IS NOT NULL OR Tel='';
+
+-- ===( 4 )===
+SELECT '>>4.' As MESSAGE;
+SELECT S.Surname, M.Subject, M.Mark
+FROM Student S 
+JOIN Matks M ON S.idStudent = M.Student_idStudent;
+
+-- ===( 5 )===
+SELECT '>>5.' As MESSAGE;
+SELECT Surname, Name, Mark
+FROM Student S
+JOIN Matks N ON idStudent = Student_idStudent
+WHERE Subject = 'Math' AND Mark = 2;
+
+-- ===( 6 )===
+SELECT '>>6.' As MESSAGE;
+SELECT CONCAT(Surname, ' ', LEFT(Name, 1)) AS Surname_Initial
+FROM Student
+WHERE Surname LIKE 'u%' AND Surname LIKE '%v%';
+
+-- ===( 7 )===
+SELECT '>>7.' As MESSAGE;
+SELECT Surname, Tel
+FROM Student
+WHERE Tel REGEXP '^[2-7]+$';
+
+-- ===( 8 )===
+SELECT '>>8.' As MESSAGE;
+SELECT Surname, Address
+FROM Student
+WHERE Address LIKE '%78%';
+
+-- ===( 9 )===
+SELECT '>>9.' As MESSAGE;
+SELECT * FROM Student
+WHERE Surname IN ('Lenin', 'Kerenski', 'Ushakov');
+
+-- ===( 10 )===
+SELECT '>>10.' As MESSAGE;
+SELECT Surname FROM Student
+WHERE Surname >= 'Lenin' AND Surname <= 'Visotski'
+ORDER BY Surname;
+
+-- ===( 11 )===
+SELECT '>>11.' As MESSAGE;
+SELECT DISTINCT Surname
+FROM Student S
+JOIN Matks M ON idStudent = Student_idStudent
+WHERE Subject = 'Math' AND Mark >= 3;
+
+-- ===( 12 )===
+SELECT '>>12.' As MESSAGE;
+SELECT DISTINCT Surname
+FROM Student S
+JOIN Matks M ON idStudent = Student_idStudent
+WHERE Subject = 'Math' AND Mark >= 3;
