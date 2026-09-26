@@ -57,3 +57,9 @@ if __name__ == "__main__":
                 print(f"  {u.name}, {u.age}, {u.email}")
         case Failure(err):
             print(f"Ошибка: {err}")
+
+# ===( 4 )===
+
+# 1. LoadState: Мощность = 3.
+
+# 2. Result[list[User], str]: Мощность = |list[User]| + |str|.
