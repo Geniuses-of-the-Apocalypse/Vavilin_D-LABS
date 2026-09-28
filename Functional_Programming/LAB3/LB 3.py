@@ -63,3 +63,5 @@ if __name__ == "__main__":
 # 1. LoadState: Мощность = 3.
 
 # 2. Result[list[User], str]: Мощность = |list[User]| + |str|.
+
+# КОД ВЫПОЛНЕННОЙ РАБОТЫ: e4bc577587fb4fafad29b193a48b58a1
