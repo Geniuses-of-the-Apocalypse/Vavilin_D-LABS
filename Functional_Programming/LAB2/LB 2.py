@@ -45,3 +45,5 @@ def top_word_endpoint():
 # === ЗАПУСК СЕРВЕРА ===
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
+# КОД ВЫПОЛНЕННОЙ РАБОТЫ: d83f0c98be47814599ec4d5f063b4d32
