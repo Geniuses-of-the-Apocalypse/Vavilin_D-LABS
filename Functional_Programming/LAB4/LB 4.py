@@ -8,7 +8,6 @@ filter_by = lambda key: lambda value: lambda items: [
 
 # ===( 2 )===
 # Вариант А: применяем каррированную filter_by к key → получаем lambda value: ...
-# ВНИМАНИЕ: partial здесь НЕ подходит, т.к. filter_by принимает 1 аргумент.
 filter_by_category = filter_by("category")
 
 # Вариант Б: partial на некаррированной функции (фиксируем первые аргументы)
@@ -31,24 +30,24 @@ over_ten   = greater_than(10)
 """
 Какие преимущества дало каррирование?
 
-1. Переиспользование и специализация.
+1) Переиспользование и специализация:
    Одну общую filter_by('category') можно превратить в десяток
    конкретных фильтров: filter_fruits, filter_vegetables и т.д.
    Каждый — самостоятельная функция, готовая к передаче в map/filter.
 
-2. Композиция.
+2) Композиция:
    Каррированные функции удобно комбинировать как строительные
    блоки из маленьких функций от одного аргумента.
 
-3. Частичное применение без явных lambda.
+3) Частичное применение без явных lambda:
    filter_by_category = filter_by('category') короче и декларативнее,
    чем lambda value: filter_by('category')(value).
 
-4. Читаемость в pipeline-стиле.
+4) Читаемость в pipeline-стиле:
    filter_by('category')('fruit')(items) читается как
    последовательность шагов, а не как одна большая формула.
 
-5. Тестируемость.
+5) Тестируемость:
    Каждый уровень каррирования проверяется отдельно.
 
 Можно ли было обойтись без каррирования?
@@ -62,7 +61,7 @@ over_ten   = greater_than(10)
 композиции и стиль. В Python оно не является идиоматическим
 по умолчанию (в отличие от Haskell), поэтому применяется точечно.
 
-Важное замечание:
+Замечание:
     partial(filter_by, 'category') для каррированной filter_by
     даёт TypeError, потому что partial фиксирует первые
     позиционные аргументы ОДНОЙ функции, а каррированная
@@ -82,13 +81,13 @@ if __name__ == "__main__":
         {"name": "banana", "category": "fruit"},
     ]
 
-    print("УРОВЕНЬ 1: ручное каррирование")
+    print("УРОВЕНЬ 1: Ручное каррирование")
     fruits = filter_by("category")("fruit")(items)
     print("filter_by('category')('fruit')(items):")
     print("  ", fruits)
 
     print()
-    print("УРОВЕНЬ 2: functools.partial")
+    print("УРОВЕНЬ 2: Functools.partial")
     filter_fruits = filter_by_category("fruit")
     print("filter_by('category')('fruit')(items):")
     print("  ", filter_fruits(items))
@@ -97,7 +96,7 @@ if __name__ == "__main__":
     print("  ", filter_fruits_p(items))
 
     print()
-    print("УРОВЕНЬ 3: greater_than + filter")
+    print("УРОВЕНЬ 3: Greater_than + filter")
     numbers = [1, 6, 8, 2, 9, 12, 3]
     print("numbers:        ", numbers)
     print("over_five:      ", list(filter(over_five, numbers)))
