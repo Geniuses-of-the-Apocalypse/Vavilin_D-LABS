@@ -7,10 +7,10 @@ filter_by = lambda key: lambda value: lambda items: [
 
 
 # ===( 2 )===
-# Вариант А: применяем каррированную filter_by к key → получаем lambda value: ...
+# Вариант А: применяем каррированную filter_by к key.
 filter_by_category = filter_by("category")
 
-# Вариант Б: partial на некаррированной функции (фиксируем первые аргументы)
+# Вариант Б: partial на некаррированной функции.
 filter_by_raw = lambda key, value, items: [
     item for item in items if item.get(key) == value
 ]
