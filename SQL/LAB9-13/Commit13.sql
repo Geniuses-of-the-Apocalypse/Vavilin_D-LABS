@@ -7,7 +7,7 @@ UPDATE Leader
 SET PostTeacher = '34-й Президент США' 
 WHERE DEPTNAME = 'Дуайт Эйзенхауэр';
 
--- Добавляем новую страну (например, Испанию)
+-- Добавляем новую страну (Испания)
 INSERT INTO Country (INN, NameCountry, IDGroup, Sname, MarkAVG) 
 VALUES ('SPA', 'Испания', 4, 'Франко', 30.00);
 
