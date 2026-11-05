@@ -18,3 +18,5 @@ COMMIT;
 
 SELECT DEPTNAME, PostTeacher FROM Leader WHERE DEPTNAME = 'Дуайт Эйзенхауэр';
 SELECT NameCountry FROM Country WHERE INN = 'SPA';
+
+ROLLBACK; -- Для проверки
