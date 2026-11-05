@@ -9,7 +9,7 @@ SET PostTeacher = 'Генералиссимус',
     TName = 'Победитель' 
 WHERE DEPTNAME = 'Георгий Жуков';
 
--- Проверяем, что изменения применились внутри транзакции
+-- Проверка, что изменения применились внутри транзакции
 SELECT DEPTNAME, PostTeacher, TName FROM Leader WHERE DEPTNAME = 'Георгий Жуков';
 
 ROLLBACK;
