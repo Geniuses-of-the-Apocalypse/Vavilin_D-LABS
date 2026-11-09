@@ -16,12 +16,11 @@ filter_by_raw = lambda key, value, items: [
 ]
 filter_by_category_p = partial(filter_by_raw, "category")
 filter_fruits_p      = partial(filter_by_category_p, "fruit")
-
+https://github.com/Geniuses-of-the-Apocalypse/Vavilin_D-LABS/blob/main/Functional_Programming/LAB4/LB%204.py
 
 # ===( 3 )===
 greater_than = lambda threshold: lambda x: x > threshold
 
-# Переиспользуемые предикаты
 over_five  = greater_than(5)
 over_ten   = greater_than(10)
 
