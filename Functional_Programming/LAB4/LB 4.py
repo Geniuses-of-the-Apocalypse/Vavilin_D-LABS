@@ -14,6 +14,9 @@ filter_by_raw = lambda key, value, items: (
 # === ( 3 ) ===
 greater_than = lambda threshold: lambda x: x > threshold
 
+# === ( 3 ) ===
+greater_than = lambda threshold: lambda x: x > threshold
+
 # === MAIN ===
 if __name__ == "__main__":
     items = (
@@ -23,7 +26,6 @@ if __name__ == "__main__":
     )
 
     print("УРОВЕНЬ 1: Ручное каррирование")
-    # Генератор → материализуем только в момент печати через tuple
     print("filter_by('category')('fruit')(items):")
     print("  ", tuple(filter_by("category")("fruit")(items)))
 
@@ -38,24 +40,25 @@ if __name__ == "__main__":
     ))
 
     print()
-    print("УРОВЕНЬ 3: greater_than + filter + reduce")
+    print("УРОВЕНЬ 3: greater_than + filter + reduce (первые 3 значения)")
     numbers = (1, 6, 8, 2, 9, 12, 3)
     print("numbers:        ", numbers)
-    print("over_five:      ", tuple(filter(greater_than(5), numbers)))
-    print("over_ten:       ", tuple(filter(greater_than(10), numbers)))
 
-    print("x*2 для x > 5:  ", tuple(
-        map(lambda x: x * 2, filter(greater_than(5), numbers))
-    ))
+    print("over_five:      ", tuple(islice(filter(greater_than(5), numbers), 3)))
+    print("over_ten:       ", tuple(islice(filter(greater_than(10), numbers), 3)))
 
-    print("reduce: сумма x>5: ", reduce(
+    print("x*2 для x > 5:  ", tuple(islice(
+        map(lambda x: x * 2, filter(greater_than(5), numbers)), 3
+    )))
+
+    print("reduce: сумма первых 3 из x>5: ", reduce(
         lambda acc, x: acc + x,
-        filter(greater_than(5), numbers),
+        islice(filter(greater_than(5), numbers), 3),
         0,
     ))
 
-    print("reduce: фрукты через запятую: ", reduce(
+    print("reduce: первые 3 фрукта через запятую: ", reduce(
         lambda acc, it: acc + ("," if acc else "") + it["name"],
-        filter_by("category")("fruit")(items),
+        islice(filter_by("category")("fruit")(items), 3),
         "",
     ))
