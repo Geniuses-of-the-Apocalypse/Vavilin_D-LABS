@@ -2,9 +2,7 @@ from types import MappingProxyType
 from functools import partial
 
 # ===( 1 )===
-FILTER_BY = lambda key: lambda value: lambda items: tuple(
-    item for item in items if item.get(key) == value
-)
+FILTER_BY = lambda key: lambda value: lambda items: tuple(item for item in items if item.get(key) == value)
 
 print(FILTER_BY("category")("electronics")
     ([{"name": "Монитор",   "category": "electronics", "price": 300},
