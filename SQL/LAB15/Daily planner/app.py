@@ -47,7 +47,7 @@ def validate_payload(data, task_id=None):
 def error(message, status=400):
     return jsonify({"error": message}), status
 
-# === Страница ===
+# === СТРАНИЦА ===
 
 @app.get("/")
 def index():
