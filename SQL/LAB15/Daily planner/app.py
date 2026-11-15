@@ -31,7 +31,7 @@ def validate_payload(data, task_id=None):
 
     description = (data.get("description") or "").strip()
 
-    dut_at_raw = data.get("due_at")
+    due_at_raw = data.get("due_at")
     due_at_norm = parse_due_at(due_at_raw)
 
     due_dt = datetime.fromisoformat(due_at_norm)
@@ -86,4 +86,4 @@ def api_delete_task(task_id):
 # === ЗАПУСК ===
 if __name__ == "__main__":
     db.init_db()
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)
