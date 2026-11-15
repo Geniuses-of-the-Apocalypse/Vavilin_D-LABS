@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ежедневник</title>
+    <link rel=""stylesheet" href="{{ url_for('static', filename='style')}}"
+</head>
+
+<body>
+
+<div class = "container">
+    <h1> Ежедневник</h1>
+
+    <!-- ФОРМА СОЗДАНИЯ И РЕДАКТИРОВАНИЯ -->
+    <section class = "form-section">
+        <h2 id = "from-title">Новая задача</h2>
+
+        <form id = "task-from" novalidate>
+            <input type="hidden" id = "task-id" value = "">
+
+            <div class="field">
+                <label for="title">Название</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    maxlength="100"
+                    placeholder="Например: Купить продукты"
+                    required
+                >
+                <div class="counter"><span id="title-counter">0</span>/100</div>
+            </div>
+            
+            <div class="field">
+                <label for="due_at">Дата и время</label>
+                <input type="datetime-local" id="due_at" name="due_at" required>
+            </div>
+
+            <div class="field">
+                <label for="description">Описание</label>
+                <textarea
+                    id = "description"
+                    name = "descripton"
+                    rows = "3"
+                    placeholder = "Детали задач (необязательно)"
+                ></textarea>
+            </div>
+
+            <div class="form-error" id="form-error" hidden></div>
+
+            <div class="form-actions">
+                <button type="submit" id="submit-btn" class="btn-primary">Создать</button>
+                <button type="button" id="cancel-btn" class="btn btn-secondary" hidden>Отмена</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- СПИСОК ЗАДАЧ -->
+    <section class = "list-section">
+        <h2>Задачи</h2>
+        <div id="task-list" class="task-list">
+            <p class="empty-state" id="empty-state">Пока нет задач. Создайте первую!</p>
+        </div>
+    </section>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
