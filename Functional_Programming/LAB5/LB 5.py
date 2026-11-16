@@ -1,3 +1,5 @@
+34e41be78af755cd91d9b9a82a943e5a2ccd1db0bdf2ccb64db28902ea326157
+
 from functools import reduce
 
 STUDENTS = tuple((
@@ -25,9 +27,7 @@ def make_total_age_and_count:
     def inner(students):
         return reduce(
             lambda acc, student: (acc[0] + student["age"], acc[1] + 1),
-            filter(lambda s: s['grade'] > 4.0, students),
-            (0, 0),
-        )
+            filter(lambda s: s['grade'] > 4.0, students),(0, 0),)
     return inner
 
 # ВЫВОД
