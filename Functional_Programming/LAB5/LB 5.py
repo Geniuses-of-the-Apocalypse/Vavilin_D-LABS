@@ -9,20 +9,20 @@ STUDENTS = tuple((
 ))
 
 # ===( 1 )===
-def make_formatted(students):
-    def inner():
+def make_formatted:
+    def inner(students):
         return map(lambda s: f"Имя: {s['name']}, Оценка: {s['grade']}", students)
     return inner
 
 # ===( 2 )===
-def make_filtered(students):
-    def inner():
+def make_filtered:
+    def inner(students):
         return filter(lambda s: s['grade'] > 4.0, students)
     return inner
 
 # ===( 3 )===
-def make_total_age_and_count(students):
-    def inner():
+def make_total_age_and_count:
+    def inner(students):
         return reduce(
             lambda acc, student: (acc[0] + student["age"], acc[1] + 1),
             filter(lambda s: s['grade'] > 4.0, students),
@@ -30,12 +30,7 @@ def make_total_age_and_count(students):
         )
     return inner
 
-formatted = make_formatted(STUDENTS)         
-filtered  = make_filtered(STUDENTS)          
-total     = make_total_age_and_count(STUDENTS)
-
-print(tuple(formatted()))    
-print(tuple(filtered()))    
-
-TOTAL_AGE, COUNT = total()   
-print(TOTAL_AGE / COUNT)
+# ВЫВОД
+print(tuple(make_formatted(STUDENTS)))    
+print(tuple(make_filtered(STUDENTS)))    
+print(make_total_age_and_count(STUDENTS))
