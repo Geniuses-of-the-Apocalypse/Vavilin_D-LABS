@@ -1,3 +1,6 @@
 # БД
 *.db
 tasks.db
+
+# PYCHACHE
+__pycache__
