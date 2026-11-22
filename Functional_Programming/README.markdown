@@ -9,3 +9,4 @@
 Код: 2cb9b1dcd1c10e1d79b56a75458c1a3bb45a27bbaa9c10da420c87dddbad035f
 ## ЛАБОРАТОРНАЯ РАБОТА 5:
 Код: 34e41be78af755cd91d9b9a82a943e5a2ccd1db0bdf2ccb64db28902ea326157
+## ЛАБОРАТОРНАЯ РАБОТА 6:
