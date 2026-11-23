@@ -1,9 +1,9 @@
 from typing import Any, Callable
 
 # ===( 1 )===
-def totals():
-    def run(orders):
-        return tuple(map(lambda o: o["total"], orders))
+def totals(orders):
+    def run():
+        return map(lambda o: o["total"], orders)
     return run
 
 # ===( 2 )===
@@ -13,8 +13,8 @@ class Box:
     def val(self): return self.v
 
 # ===( 3 )===
-def find():
-    def run(orders, oid):
+def find(orders, oid):
+    def run():
         it = iter(filter(lambda o: o["id"] == oid, orders))
         return Box(next(it, None))
     return run
@@ -23,9 +23,9 @@ def find():
 if __name__ == "__main__":
     data = [{"id": 1, "total": 150.0}, {"id": 2, "total": 300.5}]
 
-    get_totals = totals()
-    find_order = find()
+    get_totals = totals(data)       
+    find_order = find(data, 2)        
 
-    print("1:", get_totals(data))
-    print("\n2:", find_order(data, 2).map(lambda o: o["total"]).val())
-    print("\n3:", find_order(data, 99).val())
+    print("1:", tuple(get_totals()))   
+    print("2:", find_order().map(lambda o: o["total"]).val())
+    print("3:", find(data, 99)().val())
