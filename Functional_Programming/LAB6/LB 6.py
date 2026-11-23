@@ -1,7 +1,10 @@
-from typing import Any
+from typing import Any, Callable
 
 # ===( 1 )===
-def totals(orders): return list(map(lambda o: o["total"], orders))
+def totals():
+    def run(orders):
+        return tuple(map(lambda o: o["total"], orders))
+    return run
 
 # ===( 2 )===
 class Box:
@@ -10,11 +13,18 @@ class Box:
     def val(self): return self.v
 
 # ===( 3 )===
-def find(orders, oid): return Box(next((o for o in orders if o["id"] == oid), None))
+def find():
+    def run(orders, oid):
+        return Box(next((o for o in orders if o["id"] == oid), None))
+    return run
 
 # ===( main )===
 if __name__ == "__main__":
     data = [{"id": 1, "total": 150.0}, {"id": 2, "total": 300.5}]
-    print("1:", totals(data))          
-    print("\n2:", find(data, 2).map(lambda o: o["total"]).val())
-    print("\n3:", find(data, 99).val())         
+
+    get_totals = totals()
+    find_order = find()
+
+    print("1:", get_totals(data))
+    print("\n2:", find_order(data, 2).map(lambda o: o["total"]).val())
+    print("\n3:", find_order(data, 99).val())
