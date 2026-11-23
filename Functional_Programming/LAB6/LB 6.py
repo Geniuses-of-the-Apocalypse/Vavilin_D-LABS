@@ -15,7 +15,8 @@ class Box:
 # ===( 3 )===
 def find():
     def run(orders, oid):
-        return Box(next((o for o in orders if o["id"] == oid), None))
+        it = iter(filter(lambda o: o["id"] == oid, orders))
+        return Box(next(it, None))
     return run
 
 # ===( main )===
